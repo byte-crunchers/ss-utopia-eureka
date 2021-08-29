@@ -8,19 +8,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SpringCloudConfig {
 
-    @Bean
-    public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
-        return builder.routes()
-                .route(r -> r
-                		.path("/utopia/**")
-                        .uri("lb://EUREKA-CLIENT")
-//                		.id("employeeModule")
-                        )
+	@Bean
+	public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
 
-//                .route(r -> r.path("/consumer/**")
-//                        .uri("lb://SECOND-SERVICE")
-//                        .id("consumerModule"))
-                .build();
-    }
+		return builder.routes()
+				.route(r -> r.path("/utopia/**").uri("lb://EUREKA-CLIENT"))
+				.route(r -> r.path("/status/**").uri("http://httpbin.org"))
+				.build();
+	}
 
 }
