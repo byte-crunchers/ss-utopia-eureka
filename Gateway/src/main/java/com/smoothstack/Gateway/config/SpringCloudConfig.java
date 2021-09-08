@@ -12,8 +12,9 @@ public class SpringCloudConfig {
 	public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
 
 		return builder.routes()
+				.route(r -> r.path("/login**").uri("lb://AUTH-CLIENT"))
 				.route(r -> r.path("/utopia/**").uri("lb://EUREKA-CLIENT"))
-				.route(r -> r.path("/status/**").uri("http://httpbin.org"))
+//				.route(r -> r.path("/status/**").uri("http://httpbin.org"))
 				.build();
 	}
 
