@@ -6,14 +6,14 @@
 2. see eureka server dashboard - http://localhost:8761/
 
 ### Sample Eureka Client
-1. use UtopiaSpring - https://github.com/byte-crunchers/ss-utopia-auth/tree/feature/feature_branch/UtopiaSpring
+1. use SampleMicroservice - https://github.com/byte-crunchers/ss-utopia-auth/tree/feature/feature_branch/SampleMicroservice
 2. start application
 3. see the client registered in the dashboard with a random port
 
 ### Gateway
 1. start application
 2. see the gateway registered in the dashboard
-3. use postman to send a JWT authorized request to https://localhost:9090/utopia/test
+3. use postman to send a JWT authorized request to https://localhost:8443/utopia/test
 4. get response with status code 200 OK
 
 ---
