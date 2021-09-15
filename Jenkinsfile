@@ -13,7 +13,7 @@ pipeline {
             steps {
               withSonarQubeEnv('SonarQube') {
                 dir('EurekaServer') {
-                  sh 'sonar:sonar'
+                  sh 'mvn sonar:sonar'
                 }
               }
             }
@@ -32,7 +32,7 @@ pipeline {
             steps {
               withSonarQubeEnv('SonarQube') {
                 dir('Gateway') {
-                  sh 'sonar:sonar'
+                  sh 'mvn sonar:sonar'
                 }
               }
             }
