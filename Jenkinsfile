@@ -13,12 +13,12 @@ pipeline {
             steps {
               withSonarQubeEnv('SonarQube') {
                 dir('EurekaServer') {
-                  sh 'mvn clean package sonar:sonar'
+                  sh 'sonar:sonar'
                 }
               }
             }
           }
-          stage("Quality Gate") {
+          stage("Quality Gate Eureka") {
             steps {
               echo message: "can not do on local machine "
              /* timeout(time: 5, unit: 'MINUTES') {
@@ -26,15 +26,38 @@ pipeline {
               }*/
             }
           }
+          
           stage("SonarQube analysis Gateway") {
             agent any
             steps {
               withSonarQubeEnv('SonarQube') {
                 dir('Gateway') {
-                  sh 'mvn clean package sonar:sonar'
+                  sh 'sonar:sonar'
                 }
               }
             }
+          }
+           stage("Quality Gate Gateway") {
+            steps {
+              echo message: "can not do on local machine "
+             /* timeout(time: 5, unit: 'MINUTES') {
+                waitForQualityGate abortPipeline: true
+              }*/
+            }
+          }
+          stage ('Package Eureka') {
+            steps {
+              dir('EurekaServer') {
+                sh 'mvn clean package -Dmaven.test.skip'   
+              }
+            }         
+          }
+          stage ('Package Gateway') {
+            steps {
+              dir('Gateway') {
+                sh 'mvn clean package -Dmaven.test.skip'   
+              }
+            }         
           }
           stage('Build Eureka') {
             steps {
