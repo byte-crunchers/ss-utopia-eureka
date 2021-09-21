@@ -34,7 +34,7 @@ public class CORSConfiguration implements WebFluxConfigurer {
 				if (request.getMethod() == HttpMethod.OPTIONS) {
 					HttpHeaders headers = response.getHeaders();
 					headers.add("Access-Control-Allow-Origin", "*");
-					headers.add("Access-Control-Allow-Headers", "authorization");
+					headers.add("Access-Control-Allow-Headers", "authorization,content-type");
 					response.setStatusCode(HttpStatus.OK);
 					return Mono.empty();
 				}
