@@ -23,21 +23,20 @@ pipeline {
       }
       stage("Clean install eureka") {  
         steps {
-          dir(EurekaServer){
+          dir('EurekaServer') {
            sh 'mvn clean package -Dmaven.test.skip' 
           }
         }
       }
       stage("Clean install gateway") {  
         steps {
-          dir(Gateway){
+          dir('Gateway'){
            sh 'mvn clean package -Dmaven.test.skip' 
           }
         }
       }
         
         stage("SonarQube analysis Eureka") {
-            agent any
             steps {
               withSonarQubeEnv('SonarQube') {
                 dir('EurekaServer') {
@@ -56,7 +55,6 @@ pipeline {
           }
           
           stage("SonarQube analysis Gateway") {
-            agent any
             steps {
               withSonarQubeEnv('SonarQube') {
                 dir('Gateway') {
