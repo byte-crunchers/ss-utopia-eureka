@@ -3,4 +3,5 @@ FROM adoptopenjdk/openjdk11:jre-11.0.9.1_1-alpine@sha256:b6ab039066382d39cfc8439
 RUN mkdir /app
 COPY /target/*.war /app/java-application.war
 WORKDIR /app
+EXPOSE 8443
 CMD "java" "-jar" "java-application.war"
