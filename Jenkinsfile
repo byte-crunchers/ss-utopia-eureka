@@ -17,7 +17,7 @@ pipeline {
     stages {
       stage('checkout') {
         steps {
-          git branch: 'feature_kubernetes', credentialsId: 'git_login', url: 'https://github.com/byte-crunchers/ss-utopia-eureka.git'
+          git branch: 'features_kubernetes', credentialsId: 'git_login', url: 'https://github.com/byte-crunchers/ss-utopia-eureka.git'
         }
       }
       stage('get_commit_msg') {
