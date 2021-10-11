@@ -11,9 +11,15 @@ public class SpringCloudConfig {
 	@Bean
 	public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
 
-		return builder.routes()
-				.route(r -> r.path("/login**").uri("lb://AUTH-CLIENT"))
-				.route(r -> r.path("/utopia/**").uri("lb://EUREKA-CLIENT"))
+		return builder.routes().route(r -> r.path("/login").uri("lb://AUTH-CLIENT"))
+				.route(r -> r.path("/api/v0.1/CardTypes/**").uri("lb://CARD-CLIENT"))
+				.route(r -> r.path("/api/v0.1/LoanTypes/**").uri("lb://LOAN-CLIENT"))
+				.route(r -> r.path("/cards/**")
+						.filters(f -> f.rewriteLocationResponseHeader("AS_IN_REQUEST", "Location", null, "https"))
+						.uri("lb://CARD-CLIENT"))
+				.route(r -> r.path("/loans/**")
+						.filters(f -> f.rewriteLocationResponseHeader("AS_IN_REQUEST", "Location", null, "https"))
+						.uri("lb://LOAN-CLIENT"))
 //				.route(r -> r.path("/status/**").uri("http://httpbin.org"))
 				.build();
 	}
