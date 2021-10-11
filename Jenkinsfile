@@ -129,7 +129,7 @@ pipeline {
         }
         stage('Cleaning up') {
         steps{
-            sh "docker image prune"
+            sh "docker image prune -f"
  
         }
         }
