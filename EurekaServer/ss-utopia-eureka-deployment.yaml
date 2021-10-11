@@ -1,0 +1,58 @@
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: ss-utopia-eureka-stateful
+spec:
+  selector:
+    matchLabels:
+      io.kompose.service: ss-utopia-eureka
+  serviceName: ss-utopia-eureka
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe
+          convert
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/mynetwork: "true"
+        io.kompose.service: ss-utopia-eureka
+    spec:
+      containers:
+      - image: 422288715120.dkr.ecr.us-east-1.amazonaws.com/ss-utopia-eureka:latest
+      #- image: jbnilles/test-eureka:latest
+        imagePullPolicy: ""
+        name: ss-utopia-eureka
+        ports:
+        - containerPort: 8761
+        resources: {}
+      imagePullSecrets:
+      - name: regcred
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+
+      
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe
+      convert
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: ss-utopia-eureka
+  name: ss-utopia-eureka
+spec:
+  ports:
+  - name: "8761"
+    port: 8761
+    targetPort: 8761
+  selector:
+    io.kompose.service: ss-utopia-eureka
+status:
+  loadBalancer: {}
+
