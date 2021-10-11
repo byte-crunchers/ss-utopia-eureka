@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: ss-utopia-user-portal
+  name: ss-utopia-user-portal
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: ss-utopia-user-portal
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.network/mynetwork: "true"
+        io.kompose.service: ss-utopia-user-portal
+    spec:
+      containers:
+      - env:
+        - name: eureka.client.serviceUrl.defaultZone
+          value: http://ss-utopia-eureka:8761/eureka/
+        - name: BASE_PAI_URL
+          value: https://localhost:30662/
+        - name: CARDS_GET_URL
+          value: card/api/v0.1/CardTypes
+        - name: LOANS_GET_URL
+          value: loan/api/v0.1/LoanTypes
+        - name: LOGIN_URL
+          value: https://localhost:30662/auth/login
+
+        #image: 422288715120.dkr.ecr.us-east-1.amazonaws.com/ss-utopia-user-portal:latest
+        image: jbnilles/test-user-1:latest
+        imagePullPolicy: ""
+        name: ss-utopia-user-portal
+        ports:
+        - containerPort: 80
+        resources: {}
+      imagePullSecrets:
+        - name: regcred
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+status: {}
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-portal-loadbalancer
+spec:
+  selector:
+    io.kompose.service: ss-utopia-user-portal
+  ports:
+  - port: 80
+    targetPort: 80
+  type: LoadBalancer
+
+
