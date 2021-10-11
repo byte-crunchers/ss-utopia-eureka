@@ -130,7 +130,7 @@ pipeline {
         stage("kubernetes deployment"){
         steps {
         script{
-        sh 'kubectl apply -f ss-utopia-gateway-deployment.yml'
+        sh '/usr/local/bin/kubectl apply -f ss-utopia-gateway-deployment.yml'
         sh 'kubectl apply -f ss-utopia-eureka-deployment.yml'
         
         }
