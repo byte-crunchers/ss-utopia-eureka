@@ -95,7 +95,7 @@ pipeline {
           stage('Build Eureka') {
             steps {
                   dir('EurekaServer') {
-                    sh 'docker build . -t ${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/ss-utopia-eureka:${GIT_COMMIT_MSG}'
+                    sh 'docker build . -t ${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/ss-utopia-eureka:${GIT_COMMIT_MSG} -t ${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/ss-utopia-eureka:latest'
         }
 
                   }
@@ -106,14 +106,14 @@ pipeline {
         stage('Deploy Eureka') {
             steps {
                 script{
-                  sh 'docker push ${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/ss-utopia-eureka:${GIT_COMMIT_MSG}'
+                  sh 'docker push -a ${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/ss-utopia-eureka'
                 }
             }
         }
         stage('Build Gateway') {
             steps {
                   dir('Gateway') {
-                    sh 'docker build . -t ${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/ss-utopia-gateway:${GIT_COMMIT_MSG}'
+                    sh 'docker build . -t ${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/ss-utopia-gateway:${GIT_COMMIT_MSG} -t ${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/ss-utopia-gateway:latest'
 
                   }
 
@@ -123,14 +123,14 @@ pipeline {
         stage('Deploy Gateway') {
             steps {
                 script{
-                  sh 'docker push ${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/ss-utopia-gateway:${GIT_COMMIT_MSG}'
+                  sh 'docker push -a ${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/ss-utopia-gateway'
                 }
             }
         }
         stage('Cleaning up') {
         steps{
-            sh "docker rmi ${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/ss-utopia-gateway:${GIT_COMMIT_MSG}"
-            sh "docker rmi ${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/ss-utopia-eureka:${GIT_COMMIT_MSG}"
+            sh "docker image prune"
+ 
         }
         }
     }
