@@ -106,7 +106,7 @@ pipeline {
         stage('Deploy Eureka') {
             steps {
                 script{
-                  sh 'docker push ${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/ss-utopia-account:${GIT_COMMIT_MSG}'
+                  sh 'docker push ${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/ss-utopia-eureka:${GIT_COMMIT_MSG}'
                 }
             }
         }
