@@ -129,7 +129,8 @@ pipeline {
         }
         stage('Cleaning up') {
         steps{
-            sh "docker rmi ${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/ss-utopia-account:${GIT_COMMIT_MSG}"
+            sh "docker rmi ${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/ss-utopia-gateway:${GIT_COMMIT_MSG}"
+            sh "docker rmi ${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/ss-utopia-eureka:${GIT_COMMIT_MSG}"
         }
         }
     }
