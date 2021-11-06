@@ -23,6 +23,9 @@ public class SpringCloudConfig {
 				.route(r -> r.path("/api/v0.1/Loans/**")
 						.filters(f -> f.rewriteLocationResponseHeader("AS_IN_REQUEST", "Location", null, "https"))
 						.uri("lb://LOAN-CLIENT"))
+				.route(r -> r.path("/userinfo/**")
+						.filters(f -> f.rewriteLocationResponseHeader("AS_IN_REQUEST", "Location", null, "https"))
+						.uri("lb://USERS-CLIENT"))
 //				.route(r -> r.path("/status/**").uri("http://httpbin.org"))
 				.build();
 	}
